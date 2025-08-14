@@ -1,0 +1,31 @@
+/* src/index.css */
+body {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 2rem;
+  background: #f9f9f9;
+}
+
+.container {
+  margin: auto;
+  max-width: 500px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+input {
+  display: block;
+  width: 80%;
+  margin: 0.5rem auto;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
