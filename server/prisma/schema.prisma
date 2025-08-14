@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Quiz {
+  id        String       @id @default(cuid())
+  title     String
+  questions Question[]
+  sessions  GameSession[]
+}
+
+model Question {
+  id       String       @id @default(cuid())
+  text     String
+  type     QuestionType @default(MULTIPLE_CHOICE)
+  quiz     Quiz         @relation(fields: [quizId], references: [id])
+  quizId   String
+  choices  Choice[]
+}
+
+model Choice {
+  id         String   @id @default(cuid())
+  text       String
+  isCorrect  Boolean
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String
+  answers    Answer[]
+}
+
+model GameSession {
+  id        String   @id @default(cuid())
+  quiz      Quiz     @relation(fields: [quizId], references: [id])
+  quizId    String
+  pin       String   @unique
+  players   Player[]
+  startedAt DateTime?
+}
+
+model Player {
+  id        String   @id @default(cuid())
+  name      String
+  avatar    String?
+  session   GameSession @relation(fields: [sessionId], references: [id])
+  sessionId String
+  answers   Answer[]
+  points    Int      @default(0)
+}
+
+model Answer {
+  id        String   @id @default(cuid())
+  player    Player   @relation(fields: [playerId], references: [id])
+  playerId  String
+  choice    Choice?  @relation(fields: [choiceId], references: [id])
+  choiceId  String?
+  text      String?  // for open-ended or puzzle answers
+  answeredAt DateTime @default(now())
+  points    Int
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  TRUE_FALSE
+  PUZZLE
+  POLL
+  OPEN_ENDED
+}
+

@@ -1,0 +1,14 @@
+# backend
+npm init -y
+npm install express socket.io cors prisma @prisma/client
+npm install --save-dev typescript ts-node nodemon @types/node @types/express @types/cors
+npx tsc --init
+npx prisma init
+npm install nanoid
+
+
+# frontend
+npm install socket.io-client axios
+npm install react-router-dom
+npm install --save-dev @types/react-router-dom
+
